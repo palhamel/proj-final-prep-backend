@@ -26,7 +26,7 @@ const Kit = mongoose.model("Kit", {
 });
 
 // First clear database - then populate database:
-
+/* 
 Kit.deleteMany().then(() => {
   new Kit({
     name: "Krislåda KL2",
@@ -41,7 +41,7 @@ Kit.deleteMany().then(() => {
       "1st Vevradio med solcelllspanel (md088plus), 1st Vattenreningsfilter Sawyer Micro Squeeze, 1st Vattendunk (10L), 2st Nödfilt folie, 1st ficklampa / lykta, 1st Spritkök med kittel och stekpanna Trangia ",
   }).save();
 });
-
+ */
 // -----------------------------------------------
 // To reset database:
 // $ RESET_DATABASE=true npm run dev
@@ -74,6 +74,40 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("Hello world - backend here");
 });
+
+
+
+// To return all Kits:
+// http://localhost:8080/kits
+app.get("/kits", async (req, res) => {
+  const kits = await Kit.find();
+  console.log(`Message: Found ${kits.length} kits`);
+  res.json(kits);
+});
+
+
+// To return one Kits info by id from database:
+// http://localhost:8080/kits/info/5ede0dd628523f2d30ed6c8f
+// And to handle server error via try/catch
+
+app.get("/kits/info/:id", async (req, res) => {
+  try {
+    const kitId = await Kit.findById(req.params.id)
+    if (kitId) {
+      res.json(kitId)
+    } else {
+      res.status(404).json({ error: "No match for Id"})
+    }
+  } catch (err) {
+    res.status(400).json({ error: "Invalid object Id"})
+  }
+})
+
+
+
+
+
+
 
 // Start the server
 app.listen(port, () => {
