@@ -27,10 +27,7 @@ const Kit = mongoose.model("Kit", {
   average_cost: {
     type: Number,
   },
-  average_cost: {
-    type: Number,
-  },
-  kit_type: {
+  category: {
     type: String,
   },
   for_persons: {
