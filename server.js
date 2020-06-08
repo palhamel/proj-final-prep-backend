@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+import kitsData from "./data/kitsdata.json";
 
 // Error messages: (error handling: Can not find + Can not post/update)
 
@@ -42,20 +43,22 @@ Kit.deleteMany().then(() => {
   }).save();
 });
  */
+
+
 // -----------------------------------------------
-// To reset database:
+// To reset database and then populate db:
 // $ RESET_DATABASE=true npm run dev
-// Or via Heroku in Config vars
-/*
+// Seed DATABASE using Async
+// forEach loop will put all Books from JSON into database
 if (process.env.RESET_DATABASE) {
   console.log("Message: Resetting database");
 
   const seedDatabase = async () => {
-    await Thought.deleteMany();
+    await Kit.deleteMany();
+    await kitsData.forEach((kit) => new Kit(kit).save());
   };
   seedDatabase();
-};
-*/
+}
 
 // -----------------------------------------------
 
