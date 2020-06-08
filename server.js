@@ -24,6 +24,28 @@ const Kit = mongoose.model("Kit", {
   content: {
     type: String,
   },
+  average_cost: {
+    type: Number,
+  },
+  average_cost: {
+    type: Number,
+  },
+  kit_type: {
+    type: String,
+  },
+  for_persons: {
+    type: Number,
+  },
+  for_days: {
+    type: Number,
+  },
+  nutrition_cal: {
+    type: Number,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 // First clear database - then populate database:
@@ -87,6 +109,31 @@ app.get("/kits", async (req, res) => {
   console.log(`Message: Found ${kits.length} kits`);
   res.json(kits);
 });
+
+
+// To sort by cost:
+// http://localhost:8080/kits/sort?sort_by=average_cost
+app.get("/kits/sort", (req, res) => {
+  const { sort_by } = req.query;
+  const sort = {};
+
+  if (sort_by && ["average_cost"].includes(sort_by)) {
+    sort[sort_by] = -1;
+  }
+  Kit.find({})
+    .sort(sort)
+    .then((results) => {
+      if (results.length === 0) {
+        throw new Error("Nothing found");
+      }
+      res.json(results);
+    })
+    .catch((err) => {
+      res.json({ message: err.message });
+    });
+});
+
+
 
 
 // To return one Kits info by id from database:
