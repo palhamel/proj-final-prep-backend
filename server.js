@@ -41,7 +41,19 @@ const Kit = mongoose.model("Kit", {
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+  },
+  link_product: {
+    type: String,
+  },
+  link_image: {
+    type: String,
+  },
+  article_nr: {
+    type: String,
+  },
+  brand: {
+    type: String,
   },
 });
 
@@ -62,7 +74,6 @@ Kit.deleteMany().then(() => {
   }).save();
 });
  */
-
 
 // -----------------------------------------------
 // To reset database and then populate db:
@@ -97,16 +108,13 @@ app.get("/", (req, res) => {
   res.send("Hello world - backend here");
 });
 
-
-
 // To return all Kits:
 // http://localhost:8080/kits
 app.get("/kits", async (req, res) => {
   const kits = await Kit.find();
-  console.log(`Message: Found ${kits.length} kits`);
+  // console.log(`Message: Found ${kits.length} kits`);
   res.json(kits);
 });
-
 
 // To sort by cost:
 // http://localhost:8080/kits/sort?sort_by=average_cost
@@ -130,31 +138,22 @@ app.get("/kits/sort", (req, res) => {
     });
 });
 
-
-
-
 // To return one Kits info by id from database:
-// http://localhost:8080/kits/info/5ede0dd628523f2d30ed6c8f
+// http://localhost:8080/kit/info/5ede0dd628523f2d30ed6c8f
 // And to handle server error via try/catch
 
-app.get("/kits/info/:id", async (req, res) => {
+app.get("/kit/:id", async (req, res) => {
   try {
-    const kitId = await Kit.findById(req.params.id)
+    const kitId = await Kit.findById(req.params.id);
     if (kitId) {
-      res.json(kitId)
+      res.json(kitId);
     } else {
-      res.status(404).json({ error: "No match for Id"})
+      res.status(404).json({ error: "No match for Id" });
     }
   } catch (err) {
-    res.status(400).json({ error: "Invalid object Id"})
+    res.status(400).json({ error: "Invalid object Id" });
   }
-})
-
-
-
-
-
-
+});
 
 // Start the server
 app.listen(port, () => {
