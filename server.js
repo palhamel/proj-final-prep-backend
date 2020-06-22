@@ -17,24 +17,31 @@ mongoose.Promise = Promise;
 const Kit = mongoose.model("Kit", {
   name: {
     type: String,
+    required: true,
   },
   description: {
     type: String,
+    required: true,
   },
   content: {
     type: String,
+    required: true,
   },
   average_cost: {
     type: Number,
+    required: true,
   },
   category: {
     type: String,
+    required: true,
   },
   for_persons: {
     type: Number,
+    required: true,
   },
   for_days: {
     type: Number,
+    required: true,
   },
   nutrition_cal: {
     type: Number,
@@ -57,7 +64,7 @@ const Kit = mongoose.model("Kit", {
   },
 });
 
-// First clear database - then populate database:
+// First clear database - then populate database
 /* 
 Kit.deleteMany().then(() => {
   new Kit({
@@ -76,10 +83,9 @@ Kit.deleteMany().then(() => {
  */
 
 // -----------------------------------------------
-// To reset database and then populate db:
+// Reset database and then populate db
 // $ RESET_DATABASE=true npm run dev
 // Seed DATABASE using Async
-// forEach loop will put all Books from JSON into database
 if (process.env.RESET_DATABASE) {
   console.log("Message: Resetting database");
 
@@ -91,10 +97,8 @@ if (process.env.RESET_DATABASE) {
 }
 
 // -----------------------------------------------
-
 // Defines the port the app will run on. Defaults to 8080, but can be
 // overridden when starting the server. For example:
-//
 //   PORT=9000 npm start
 const port = process.env.PORT || 8080;
 const app = express();
@@ -103,7 +107,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Start defining your routes here
+// Start defining routes here
 app.get("/", (req, res) => {
   res.send("Hello world - backend here");
 });
