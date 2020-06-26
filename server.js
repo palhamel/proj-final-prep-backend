@@ -2,12 +2,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+// Data source CSV export file:
 import kitsData from "./data/kitsdata.json";
 
+// Mongoose & Database setup:
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-final";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
-
+// Mongoose model setup:
 const Kit = mongoose.model("Kit", {
   name: {
     type: String,
@@ -58,7 +60,8 @@ const Kit = mongoose.model("Kit", {
   },
 });
 
-
+// $ RESET_DATABASE=true npm run dev
+// Or via Heroku in Config vars
 if (process.env.RESET_DATABASE) {
   console.log("Message: Resetting database");
 
@@ -69,7 +72,7 @@ if (process.env.RESET_DATABASE) {
   seedDatabase();
 }
 
-
+// Defines the port the app will run on:
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -84,15 +87,17 @@ app.use((req, res, next) => {
   }
 });
 
-
+// Routes:
 app.get("/", (req, res) => {
   res.send("Hello world - backend here");
 });
+
 
 app.get("/kits", async (req, res) => {
   const kits = await Kit.find();
   res.json(kits);
 });
+
 
 app.get("/kits/sort", (req, res) => {
   const { sort_by } = req.query;
@@ -114,6 +119,7 @@ app.get("/kits/sort", (req, res) => {
     });
 });
 
+
 app.get("/kit/:id", async (req, res) => {
   try {
     const kitId = await Kit.findById(req.params.id);
@@ -126,6 +132,7 @@ app.get("/kit/:id", async (req, res) => {
     res.status(400).json({ error: "Invalid object Id" });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
