@@ -98,7 +98,7 @@ app.get("/kits", async (req, res) => {
   res.json(kits);
 });
 
-
+// http://localhost:8080/kits/sort?sort_by=average_cost
 app.get("/kits/sort", (req, res) => {
   const { sort_by } = req.query;
   const sort = {};
