@@ -89,7 +89,7 @@ app.use((req, res, next) => {
 
 // Routes:
 app.get("/", (req, res) => {
-  res.send("Hello world - backend here! API endpoints: /kits (list all) , /kit/5ef5f1e33d6e6c002aba45ba (singel item), /kits/sort?sort_by=average_cost (sort db)"
+  res.send("Hello world - backend here! API endpoints: /kits (list all) , /kit/5ef5fc996202b3002a7ab308 (singel item), /kits/sort?sort_by=average_cost (sort db)"
   );
 });
 

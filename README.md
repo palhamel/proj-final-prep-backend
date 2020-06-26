@@ -23,7 +23,7 @@ https://proj-final-prep-backend.herokuapp.com/ <br>
 https://proj-final-prep-backend.herokuapp.com/kits <br>
 
 - To return ONE Kit via database id:
-https://proj-final-prep-backend.herokuapp.com/kit/5ef5f1e33d6e6c002aba45ba <br>
+https://proj-final-prep-backend.herokuapp.com/kit/5ef5fc996202b3002a7ab308 <br>
 
 - Sort by price:
 https://proj-final-prep-backend.herokuapp.com/kits/sort?sort_by=average_cost <br>
